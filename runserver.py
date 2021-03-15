@@ -1,7 +1,19 @@
 import uvicorn
 from fastapi import FastAPI
 
+import database
+
 app = FastAPI()
+
+
+@app.on_event('startup')
+async def startup():
+    await database.setup()
+
+
+@app.on_event('shutdown')
+async def shutdown():
+    await database.shutdown()
 
 
 @app.get('/')
