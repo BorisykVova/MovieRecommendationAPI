@@ -13,7 +13,7 @@ TORTOISE_ORM = {
     },
     'apps': {
         'auth': {
-            'models': ['auth.models'],
+            'models': ['components.auth.models'],
             'default_connection': 'mysql',
         },
     }
