@@ -1,10 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
 
+import auth
 import database
 
 app = FastAPI()
-
+app.include_router(auth.ROUTER, prefix='/auth')
 
 @app.on_event('startup')
 async def startup():

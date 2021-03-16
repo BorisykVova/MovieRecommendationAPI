@@ -12,10 +12,9 @@ TORTOISE_ORM = {
         }
     },
     'apps': {
-
-        # 'auth': {
-        #     'models': ['auth.models'],
-        #     'default_connection': 'mysql',
-        # },
+        'auth': {
+            'models': ['auth.models'],
+            'default_connection': 'mysql',
+        },
     }
 }
