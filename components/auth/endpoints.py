@@ -4,6 +4,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from .backends.schemas import Token
 from . import models, schemas, errors, crud
+from common.schemas import StatusResponse, Status
 
 TAGS = ['auth']
 
@@ -52,9 +53,7 @@ async def update_user(update_data: schemas.UserUpdate, user: models.User = Depen
     return await crud.update(user, update_data)
 
 
-@auth.delete('/user', tags=TAGS)
+@auth.delete('/user', response_model=StatusResponse, tags=TAGS)
 async def delete_user(user: models.User = Depends(get_current_user)):
     await user.delete()
-    return {
-        'status': 'ok',
-    }
+    return StatusResponse(detail=Status.OK)
