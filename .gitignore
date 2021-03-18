@@ -3,3 +3,7 @@
 
 # VENV
 venv
+
+# Configs
+configs/*.yaml
+!configs/base.yaml

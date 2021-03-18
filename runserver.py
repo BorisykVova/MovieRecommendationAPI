@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 import database
 import components
+from configs import get_config
 
 app = FastAPI()
 
@@ -27,4 +28,9 @@ async def health_check():
 
 
 if __name__ == '__main__':
-    uvicorn.run('runserver:app', port=8001, reload=True)
+    config = get_config()
+    uvicorn.run(
+        'runserver:app',
+        port=config.SERVER.port,
+        reload=config.SERVER.reload,
+    )

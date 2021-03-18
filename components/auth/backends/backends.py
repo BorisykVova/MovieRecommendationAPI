@@ -4,10 +4,10 @@ from passlib.context import CryptContext
 
 from .. import errors
 from .base import BaseBackend
+from configs import get_config
 from .schemas import Token, TokenData, TokenType
 
-ALGORITHM = 'HS256'
-SECRET_KEY = '062843e82369cbe2a3f15c25b24e4c7300c4f6d0c2059a2d76e5082b526f636e'
+config = get_config()
 
 
 class PasslibBased(BaseBackend):
@@ -29,8 +29,8 @@ class JwtBackend(PasslibBased):
     def create_access_token(cls, data: TokenData) -> Token:
         jwt_token = jwt.encode(
             data.dict(exclude_none=True),
-            key=SECRET_KEY,
-            algorithm=ALGORITHM,
+            key=config.AUTH.secret_key,
+            algorithm=config.AUTH.algorithm,
         )
 
         token = Token(
@@ -44,8 +44,8 @@ class JwtBackend(PasslibBased):
         try:
             payload = jwt.decode(
                 access_token,
-                key=SECRET_KEY,
-                algorithms=ALGORITHM,
+                key=config.AUTH.secret_key,
+                algorithms=config.AUTH.algorithm,
             )
         except JWTError as err:
             raise errors.CredentialError(f'Bad token: {err}')
